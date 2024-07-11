@@ -9,7 +9,8 @@ function Products() {
   return (
     <div className="products">
       <h2>Products Component</h2>
-      <ProductItem myName="Emin Başbayan" numbers={[1, 2, 3, 4, 5]} />
+      <ProductItem image={image} title={title} price={price} />
+      <ProductItem image="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg" title="Ceket" price={200} />
     </div>
   );
 }
