@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import "./ProductItem.css";
 
 function ProductItem(props) {
-  console.log(props.price + 20);
+  
   return (
     <div className="product-item">
       <div className="product-image">
