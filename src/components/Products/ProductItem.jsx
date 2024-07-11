@@ -5,10 +5,22 @@ function ProductItem() {
         <img
           src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
           alt="product image"
+          style={{
+            width: "200px",
+            height: "200px",
+          }}
         />
       </div>
-      <div className="product-info">
-        <strong className="product-title">Mens Casual Premium Slim Fit T-Shirts</strong>
+      <div
+        className="product-info"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <strong className="product-title">
+          Mens Casual Premium Slim Fit T-Shirts
+        </strong>
         <span className="product-price">100₺</span>
       </div>
     </div>
