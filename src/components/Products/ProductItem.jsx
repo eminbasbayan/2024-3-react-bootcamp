@@ -1,28 +1,24 @@
-const productImgCss = {
-  width: "200px",
-  height: "200px",
-};
+import "./ProductItem.css";
 
-const productInfoCss = {
-  display: "flex",
-  flexDirection: "column",
-};
+function ProductItem(props) {
+  console.log(props);
+  console.log(props.myName);
+  console.log(props.numbers);
 
-function ProductItem() {
+  return null;
   return (
     <div className="product-item">
       <div className="product-image">
         <img
-          src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
+          src={image}
           alt="product image"
-          style={productImgCss}
         />
       </div>
-      <div className="product-info" style={productInfoCss}>
+      <div className="product-info">
         <strong className="product-title">
-          Mens Casual Premium Slim Fit T-Shirts
+          {title}
         </strong>
-        <span className="product-price">100₺</span>
+        <span className="product-price">{price}₺</span>
       </div>
     </div>
   );
