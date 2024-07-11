@@ -5,7 +5,6 @@ function Products() {
     <div className="products">
       <h2>Products Component</h2>
       <ProductItem />
-
     </div>
   );
 }
