@@ -6,11 +6,13 @@ function AddNewProduct() {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
 
   console.log({
     title,
     image,
     price,
+    description,
   });
 
   function handleTitleChange(event) {
@@ -23,6 +25,10 @@ function AddNewProduct() {
 
   function handlePriceChange(event) {
     setPrice(event.target.value);
+  }
+
+  function handleDescChange(event) {
+    setDescription(event.target.value);
   }
 
   return (
@@ -41,6 +47,14 @@ function AddNewProduct() {
           type="text"
           onChange={handleImageChange}
           placeholder="Ürün görseli giriniz."
+        />
+      </div>
+      <div className="product-input">
+        <label>Description</label>
+        <input
+          type="text"
+          onChange={handleDescChange}
+          placeholder="Ürün açıklaması giriniz."
         />
       </div>
       <div className="product-input">
