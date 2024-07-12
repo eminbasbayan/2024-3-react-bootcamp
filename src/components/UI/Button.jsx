@@ -2,9 +2,11 @@ import PropTypes from "prop-types";
 import "./Button.css";
 
 function Button(props) {
-  const btnClassNames = `btn btn-${props.color} btn-${props.size} ${props.addClass}`;
+  const { color, size, addClass, children } = props;
 
-  return <button className={btnClassNames}>Click</button>;
+  const btnClassNames = `btn btn-${color} btn-${size} ${addClass ? addClass : ""}`;
+
+  return <button className={btnClassNames}>{children}</button>;
 }
 
 Button.propTypes = {
@@ -12,6 +14,7 @@ Button.propTypes = {
     .isRequired,
   size: PropTypes.oneOf(["sm", "md", "lg"]).isRequired,
   addClass: PropTypes.string,
+  children: PropTypes.node.isRequired,
 };
 
 export default Button;
