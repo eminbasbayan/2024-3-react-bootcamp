@@ -3,11 +3,6 @@ import { productsData } from "../../data";
 import "./Products.css";
 
 function Products() {
-  console.log(
-    productsData.map((product) => {
-      return { ...product, title: "Emin Başbayan" };
-    })
-  );
 
   return (
     <div className="products">
