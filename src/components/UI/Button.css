@@ -47,3 +47,23 @@
 .btn-danger:hover {
   background-color: #c82333;
 }
+
+/*? Size variants */
+
+/* Small button */
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* Medium button (default size) */
+.btn-md {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+/* Large button */
+.btn-lg {
+  padding: 15px 30px;
+  font-size: 18px;
+}
