@@ -1,0 +1,35 @@
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+  }
+
+  .product-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .product-input label {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .product-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  .product-input input:focus {
+    border-color: #007bff;
+    outline: none;
+  }

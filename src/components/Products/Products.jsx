@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ProductItem from "./ProductItem";
+import AddNewProduct from "./AddNewProduct";
 import { productsData } from "../../data";
 import "./Products.css";
 
@@ -9,6 +10,7 @@ function Products() {
   return (
     <div className="products">
       <h2>Products Component</h2>
+      <AddNewProduct />
       <div className="products-wrapper">
         {productsData.map((product) => (
           <ProductItem
