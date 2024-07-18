@@ -4,9 +4,15 @@ import "./Button.css";
 function Button(props) {
   const { color, size, addClass, children, onClick } = props;
 
-  const btnClassNames = `btn btn-${color} btn-${size} ${addClass ? addClass : ""}`;
+  const btnClassNames = `btn btn-${color} btn-${size} ${
+    addClass ? addClass : ""
+  }`;
 
-  return <button className={btnClassNames} onClick={onClick}>{children}</button>;
+  return (
+    <button className={btnClassNames} onClick={onClick}>
+      {children}
+    </button>
+  );
 }
 
 Button.propTypes = {

@@ -5,22 +5,32 @@ import { productsData } from "../../data";
 import "./Products.css";
 
 function Products() {
-  const [titleState, setTitleState] = useState("Şapka");
+  const [products, setProducts] = useState(productsData);
+
+  function handleSubmit(event, productData) {
+    event.preventDefault();
+
+    const newProduct = {
+      ...productData,
+      id: Math.random(),
+      price: Number(productData.price),
+    };
+
+    setProducts([newProduct, ...products]);
+  }
 
   return (
     <div className="products">
       <h2>Products Component</h2>
-      <AddNewProduct />
+      <AddNewProduct handleSubmit={handleSubmit} />
       <div className="products-wrapper">
-        {productsData.map((product) => (
+        {products.map((product) => (
           <ProductItem
             key={product.id}
             image={product.image}
             title={product.title}
             price={product.price}
             description={product.description}
-            titleState={titleState}
-            setTitleState={setTitleState}
           />
         ))}
       </div>
