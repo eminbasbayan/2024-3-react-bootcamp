@@ -4,6 +4,7 @@ import Button from "../UI/Button";
 import ProductInput from "./ProductInput";
 
 import "./AddNewProduct.css";
+import Modal from "../UI/Modal";
 
 const productInputs = [
   {
@@ -39,6 +40,7 @@ function AddNewProduct({ handleSubmit }) {
     price: "",
     description: "",
   });
+  const [isShowModal, setIsShowModal] = useState(false);
 
   function handleChange({ target: { name, value } }) {
     setProductData({ ...productData, [name]: value });
@@ -60,15 +62,18 @@ function AddNewProduct({ handleSubmit }) {
   }
 
   return (
-    <form className="product-form" onSubmit={onSubmit}>
-      {productInputs.map((input, index) => (
-        <ProductInput key={index} {...input} handleChange={handleChange} />
-      ))}
+    <>
+      <form className="product-form" onSubmit={onSubmit}>
+        {productInputs.map((input, index) => (
+          <ProductInput key={index} {...input} handleChange={handleChange} />
+        ))}
 
-      <Button size="lg" color="success">
-        Yeni Ürün Ekle
-      </Button>
-    </form>
+        <Button size="lg" color="success">
+          Yeni Ürün Ekle
+        </Button>
+      </form>
+      {isShowModal && <Modal />}
+    </>
   );
 }
 
