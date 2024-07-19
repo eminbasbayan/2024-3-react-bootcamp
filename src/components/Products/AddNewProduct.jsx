@@ -54,7 +54,7 @@ function AddNewProduct({ handleSubmit }) {
     );
 
     if (!isFormValid) {
-      console.error("Input alanları boş geçilemez!");
+      setIsShowModal(true);
       return;
     }
 
@@ -72,7 +72,13 @@ function AddNewProduct({ handleSubmit }) {
           Yeni Ürün Ekle
         </Button>
       </form>
-      {isShowModal && <Modal />}
+      {isShowModal && (
+        <Modal
+          setIsShowModal={setIsShowModal}
+          title="Form Kontrol"
+          desc="Input alanları boş geçilemez!"
+        />
+      )}
     </>
   );
 }
