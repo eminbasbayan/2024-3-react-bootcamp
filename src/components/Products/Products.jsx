@@ -7,8 +7,7 @@ import "./Products.css";
 function Products() {
   const [products, setProducts] = useState(productsData);
 
-  function handleSubmit(event, productData) {
-    event.preventDefault();
+  function handleSubmit(productData) {
 
     const newProduct = {
       ...productData,
