@@ -8,7 +8,6 @@ function Products() {
   const [products, setProducts] = useState(productsData);
 
   function handleSubmit(productData) {
-
     const newProduct = {
       ...productData,
       id: Math.random(),
@@ -20,7 +19,7 @@ function Products() {
 
   return (
     <div className="products">
-      <h2>Products Component</h2>
+      <h2 className="text-4xl font-bold mb-5">Products Component</h2>
       <AddNewProduct handleSubmit={handleSubmit} />
       <div className="products-wrapper">
         {products.map((product) => (

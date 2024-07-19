@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
 function Modal({ setIsShowModal, title, desc }) {
@@ -5,7 +6,7 @@ function Modal({ setIsShowModal, title, desc }) {
     setIsShowModal(false);
   }
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full relative">
         <div className="flex justify-between items-center border-b pb-3">
@@ -33,7 +34,8 @@ function Modal({ setIsShowModal, title, desc }) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("modal")
   );
 }
 

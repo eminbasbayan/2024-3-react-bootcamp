@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "../UI/Button";
 import ProductInput from "./ProductInput";
@@ -62,7 +62,7 @@ function AddNewProduct({ handleSubmit }) {
   }
 
   return (
-    <>
+    <Fragment>
       <form className="product-form" onSubmit={onSubmit}>
         {productInputs.map((input, index) => (
           <ProductInput key={index} {...input} handleChange={handleChange} />
@@ -79,7 +79,7 @@ function AddNewProduct({ handleSubmit }) {
           desc="Input alanları boş geçilemez!"
         />
       )}
-    </>
+    </Fragment>
   );
 }
 
