@@ -17,8 +17,10 @@ function ProductItem({ setProducts, id, image, title, price, description }) {
         <img src={image} alt="product image" />
       </div>
       <div className="product-info">
-        <strong className="product-title">{title}</strong>
-        <p className="product-description">{description.slice(0, 70)}</p>
+        <strong className="product-title line-2-clamp">{title}</strong>
+        <p className="product-description line-2-clamp">
+          {description.slice(0, 70)}
+        </p>
         <span className="product-price">{price}₺</span>
         <Button color="primary" size="lg">
           Add To Cart
