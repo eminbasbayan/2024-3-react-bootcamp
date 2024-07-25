@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const LoginPage = () => {
   const formik = useFormik({
@@ -7,11 +8,20 @@ const LoginPage = () => {
       password: "",
       remember_me: false,
     },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .required("Zorunlu alan!")
+        .email("Geçerli bir e-mail giriniz!"),
+      password: Yup.string()
+        .required("Zorunlu alan!")
+        .min(6, "Şifre en az 6 karakter olmalı!"),
+    }),
     onSubmit: (values, { resetForm }) => {
       console.log(values);
       resetForm();
     },
   });
+
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
@@ -31,7 +41,11 @@ const LoginPage = () => {
               name="email"
               onChange={formik.handleChange}
               value={formik.values.email}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.email && formik.errors.email && (
+              <span className="text-red-600">{formik.errors.email}</span>
+            )}
           </div>
           <div>
             <label
@@ -47,7 +61,11 @@ const LoginPage = () => {
               name="password"
               onChange={formik.handleChange}
               value={formik.values.password}
+              onBlur={formik.handleBlur}
             />
+            {formik.touched.password && formik.errors.password && (
+              <span className="text-red-600">{formik.errors.password}</span>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
