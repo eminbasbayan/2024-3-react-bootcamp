@@ -17,7 +17,7 @@ function ProductItem({ setProducts, id, image, title, price, description }) {
         <img src={image} alt="product image" />
       </div>
       <div className="product-info">
-        <strong className="product-title line-2-clamp">{title}</strong>
+        <strong className="product-title line-1-clamp">{title}</strong>
         <p className="product-description line-2-clamp">
           {description.slice(0, 70)}
         </p>
