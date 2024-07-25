@@ -1,8 +1,8 @@
 import { useState } from "react";
 import ProductItem from "./ProductItem";
 import AddNewProduct from "./AddNewProduct";
-import "./Products.css";
 import Spinner from "../UI/Spinner";
+import "./Products.css";
 
 function Products() {
   const [products, setProducts] = useState([]);
