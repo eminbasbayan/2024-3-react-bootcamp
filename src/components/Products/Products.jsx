@@ -52,6 +52,7 @@ function Products() {
         setProductData={setProductData}
         productToUpdate={productToUpdate}
         setProducts={setProducts}
+        setProductToUpdate={setProductToUpdate}
       />
       <div className="products-wrapper">
         {products.map((product) => (

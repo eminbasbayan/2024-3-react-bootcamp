@@ -39,11 +39,21 @@ function AddNewProduct({
   setProductData,
   productToUpdate,
   setProducts,
+  setProductToUpdate
 }) {
   const [isShowModal, setIsShowModal] = useState(false);
 
   function handleChange({ target: { name, value } }) {
     setProductData({ ...productData, [name]: value });
+  }
+
+  function clearInputs() {
+    setProductData({
+      title: "",
+      image: "",
+      price: "",
+      description: "",
+    });
   }
 
   function onSubmit(event) {
@@ -66,10 +76,13 @@ function AddNewProduct({
             : item;
         });
       });
+      setProductToUpdate()
+      clearInputs();
       return;
     }
 
     handleSubmit(productData);
+    clearInputs();
   }
 
   return (
@@ -111,6 +124,7 @@ AddNewProduct.propTypes = {
   setProductData: PropTypes.func,
   setProducts: PropTypes.func,
   productToUpdate: PropTypes.object,
+  setProductToUpdate: PropTypes.func,
 };
 
 export default AddNewProduct;
