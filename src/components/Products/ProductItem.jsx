@@ -22,15 +22,11 @@ function ProductItem({ setProducts, id, image, title, price, description }) {
           {description.slice(0, 70)}
         </p>
         <span className="product-price">{price}₺</span>
-        <Button color="primary" size="lg">
-          Add To Cart
+        <Button color="primary">Add To Cart</Button>
+        <Button color="secondary" addClass="mt-3">
+          Update
         </Button>
-        <Button
-          color="danger"
-          size="lg"
-          addClass="mt-3"
-          onClick={handleDeleteItem}
-        >
+        <Button color="danger" addClass="mt-3" onClick={handleDeleteItem}>
           Delete
         </Button>
       </div>
