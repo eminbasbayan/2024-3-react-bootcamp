@@ -7,6 +7,13 @@ import "./Products.css";
 function Products() {
   const [products, setProducts] = useState([]);
   const [isShowLoading, setIsShowLoading] = useState(false);
+  const [productToUpdate, setProductToUpdate] = useState();
+  const [productData, setProductData] = useState({
+    title: "",
+    image: "",
+    price: "",
+    description: "",
+  });
 
   function handleSubmit(productData) {
     const newProduct = {
@@ -28,13 +35,24 @@ function Products() {
       .finally(() => setIsShowLoading(false));
   }
 
+  function handleUpdateItem(product) {
+    setProductToUpdate(product);
+    setProductData(product);
+  }
+
   return (
     <div className="products">
       <h2 className="text-4xl font-bold mb-5">Products Component</h2>
       <button onClick={fetchProducts} className="btn btn-primary mb-10">
         Get All Products
       </button>
-      <AddNewProduct handleSubmit={handleSubmit} />
+      <AddNewProduct
+        handleSubmit={handleSubmit}
+        productData={productData}
+        setProductData={setProductData}
+        productToUpdate={productToUpdate}
+        setProducts={setProducts}
+      />
       <div className="products-wrapper">
         {products.map((product) => (
           <ProductItem
@@ -45,6 +63,7 @@ function Products() {
             price={product.price}
             description={product.description}
             setProducts={setProducts}
+            onUpdateItem={handleUpdateItem}
           />
         ))}
       </div>

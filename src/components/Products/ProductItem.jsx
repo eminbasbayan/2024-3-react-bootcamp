@@ -2,7 +2,15 @@ import PropTypes from "prop-types";
 import Button from "../UI/Button";
 import "./ProductItem.css";
 
-function ProductItem({ setProducts, id, image, title, price, description }) {
+function ProductItem({
+  setProducts,
+  id,
+  image,
+  title,
+  price,
+  description,
+  onUpdateItem,
+}) {
   function handleDeleteItem() {
     setProducts((products) =>
       products.filter((product) => {
@@ -23,7 +31,11 @@ function ProductItem({ setProducts, id, image, title, price, description }) {
         </p>
         <span className="product-price">{price}₺</span>
         <Button color="primary">Add To Cart</Button>
-        <Button color="secondary" addClass="mt-3">
+        <Button
+          color="secondary"
+          addClass="mt-3"
+          onClick={() => onUpdateItem({ id, image, title, price, description })}
+        >
           Update
         </Button>
         <Button color="danger" addClass="mt-3" onClick={handleDeleteItem}>
@@ -41,6 +53,7 @@ ProductItem.propTypes = {
   description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   setProducts: PropTypes.func.isRequired,
+  onUpdateItem: PropTypes.func.isRequired,
 };
 
 export default ProductItem;

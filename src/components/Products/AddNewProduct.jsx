@@ -33,13 +33,13 @@ const productInputs = [
   },
 ];
 
-function AddNewProduct({ handleSubmit }) {
-  const [productData, setProductData] = useState({
-    title: "",
-    image: "",
-    price: "",
-    description: "",
-  });
+function AddNewProduct({
+  handleSubmit,
+  productData,
+  setProductData,
+  productToUpdate,
+  setProducts,
+}) {
   const [isShowModal, setIsShowModal] = useState(false);
 
   function handleChange({ target: { name, value } }) {
@@ -50,11 +50,22 @@ function AddNewProduct({ handleSubmit }) {
     event.preventDefault();
 
     const isFormValid = Object.values(productData).every(
-      (value) => value.trim() !== ""
+      (value) => String(value).trim() !== ""
     );
 
     if (!isFormValid) {
       setIsShowModal(true);
+      return;
+    }
+
+    if (productToUpdate) {
+      setProducts((products) => {
+        return products.map((item) => {
+          return item.id === productToUpdate.id
+            ? { ...productData, id: productToUpdate.id }
+            : item;
+        });
+      });
       return;
     }
 
@@ -65,12 +76,23 @@ function AddNewProduct({ handleSubmit }) {
     <Fragment>
       <form className="product-form" onSubmit={onSubmit}>
         {productInputs.map((input, index) => (
-          <ProductInput key={index} {...input} handleChange={handleChange} />
+          <ProductInput
+            key={index}
+            value={productData[input.name]}
+            {...input}
+            handleChange={handleChange}
+          />
         ))}
 
-        <Button size="lg" color="success">
-          Yeni Ürün Ekle
-        </Button>
+        {productToUpdate ? (
+          <Button size="lg" color="primary">
+            Ürünü Güncelle
+          </Button>
+        ) : (
+          <Button size="lg" color="success">
+            Yeni Ürün Ekle
+          </Button>
+        )}
       </form>
       {isShowModal && (
         <Modal
@@ -85,6 +107,10 @@ function AddNewProduct({ handleSubmit }) {
 
 AddNewProduct.propTypes = {
   handleSubmit: PropTypes.func,
+  productData: PropTypes.object,
+  setProductData: PropTypes.func,
+  setProducts: PropTypes.func,
+  productToUpdate: PropTypes.object,
 };
 
 export default AddNewProduct;
