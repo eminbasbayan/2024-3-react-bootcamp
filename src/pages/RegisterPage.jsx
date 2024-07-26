@@ -1,10 +1,29 @@
 import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+  email: z.string().min(1, "Zorunlu alan").email("Geçerli bir e-mail giriniz!"),
+  password: z
+    .string()
+    .min(1, "Zorunlu alan")
+    .min(6, "Şifre en az 6 karakter olmalı!"),
+});
 
 const RegisterPage = () => {
-  const { register, handleSubmit } = useForm({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: zodResolver(schema),
+    mode: "onBlur",
+  });
 
   function onSubmit(values) {
     console.log(values);
+    reset();
   }
 
   return (
@@ -23,11 +42,11 @@ const RegisterPage = () => {
               type="email"
               id="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              name="email"
-              {...register("name")}
+              {...register("email")}
             />
-
-            <span className="text-red-600">Error</span>
+            {errors.email && (
+              <span className="text-red-600">{errors.email.message}</span>
+            )}
           </div>
           <div>
             <label
@@ -40,10 +59,11 @@ const RegisterPage = () => {
               type="password"
               id="password"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-              name="password"
               {...register("password")}
             />
-            <span className="text-red-600">Error</span>
+            {errors.password && (
+              <span className="text-red-600">{errors.password.message}</span>
+            )}
           </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
