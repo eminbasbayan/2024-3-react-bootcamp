@@ -1,9 +1,17 @@
+import { useForm } from "react-hook-form";
+
 const RegisterPage = () => {
+  const { register, handleSubmit } = useForm({});
+
+  function onSubmit(values) {
+    console.log(values);
+  }
+
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
               htmlFor="email"
@@ -16,6 +24,7 @@ const RegisterPage = () => {
               id="email"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               name="email"
+              {...register("name")}
             />
 
             <span className="text-red-600">Error</span>
@@ -32,6 +41,7 @@ const RegisterPage = () => {
               id="password"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               name="password"
+              {...register("password")}
             />
             <span className="text-red-600">Error</span>
           </div>
