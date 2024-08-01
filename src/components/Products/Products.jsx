@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import AddNewProduct from "./AddNewProduct";
 import Spinner from "../UI/Spinner";
@@ -39,6 +39,10 @@ function Products() {
     setProductToUpdate(product);
     setProductData(product);
   }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="products">
