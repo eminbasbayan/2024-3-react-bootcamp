@@ -1,10 +1,21 @@
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 function Modal({ setIsShowModal, title, desc }) {
+  
   function handleClose() {
     setIsShowModal(false);
   }
+
+  useEffect(() => {
+    console.log("modal DOM'a yüklendi!");
+
+    // clean-up function
+    return () => {
+      console.log("modal DOM'dan kaldırıldı!");
+    };
+  }, []);
 
   return createPortal(
     <div className="fixed inset-0 flex items-center justify-center z-50">
