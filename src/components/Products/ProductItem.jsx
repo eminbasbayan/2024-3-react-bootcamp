@@ -10,6 +10,7 @@ function ProductItem({
   price,
   description,
   onUpdateItem,
+  setCartItems,
 }) {
   function handleDeleteItem() {
     setProducts((products) =>
@@ -18,6 +19,15 @@ function ProductItem({
       })
     );
   }
+
+  function addToCart() {
+    setCartItems((cartItems) => [
+      ...cartItems,
+      { id, image, title, price, description },
+    ]);
+  }
+
+  console.log("products item re-rendered!");
 
   return (
     <div className="product-item">
@@ -30,7 +40,9 @@ function ProductItem({
           {description.slice(0, 70)}
         </p>
         <span className="product-price">{price}₺</span>
-        <Button color="primary">Add To Cart</Button>
+        <Button color="primary" onClick={addToCart}>
+          Add To Cart
+        </Button>
         <Button
           color="secondary"
           addClass="mt-3"

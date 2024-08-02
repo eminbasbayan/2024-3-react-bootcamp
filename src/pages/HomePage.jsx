@@ -1,11 +1,11 @@
-import Counter from "../components/Counter";
 import Products from "../components/Products/Products";
 
-const HomePage = () => {
+const HomePage = ({ setCartItems }) => {
+  console.log("home page re-rendered!");
+  
   return (
     <div className="home-page">
-      {/* <Counter /> */}
-      <Products />
+      <Products setCartItems={setCartItems} />
     </div>
   );
 };
