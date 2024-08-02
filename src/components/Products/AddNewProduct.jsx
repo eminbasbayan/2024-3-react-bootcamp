@@ -39,7 +39,7 @@ function AddNewProduct({
   setProductData,
   productToUpdate,
   setProducts,
-  setProductToUpdate
+  setProductToUpdate,
 }) {
   const [isShowModal, setIsShowModal] = useState(false);
 
@@ -76,7 +76,7 @@ function AddNewProduct({
             : item;
         });
       });
-      setProductToUpdate()
+      setProductToUpdate();
       clearInputs();
       return;
     }
