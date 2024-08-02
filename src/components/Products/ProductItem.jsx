@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "../UI/Button";
 import "./ProductItem.css";
+import { CartContext } from "../../context/cart/CartContext";
 
 function ProductItem({
   setProducts,
@@ -12,6 +14,10 @@ function ProductItem({
   onUpdateItem,
   setCartItems,
 }) {
+  const data = useContext(CartContext);
+
+  console.log(data.fullName);
+
   function handleDeleteItem() {
     setProducts((products) =>
       products.filter((product) => {
