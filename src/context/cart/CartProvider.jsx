@@ -1,13 +1,35 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { CartContext } from "./CartContext";
 
 function CartProvider({ children }) {
-  const fullName = "Emin Başbayan";
+  const [cartItems, setCartItems] = useState([]);
+  console.log(cartItems);
+
+  function addToCart(item) {
+    const findCartItem = cartItems.find((cItem) => cItem.id === item.id);
+    if (findCartItem) {
+      const newCartItems = cartItems.map((cItem) => {
+        if (cItem.id === findCartItem.id) {
+          return {
+            ...cItem,
+            quantity: cItem.quantity + 1,
+          };
+        }
+        return cItem;
+      });
+      setCartItems(newCartItems);
+    } else {
+      setCartItems((cartItems) => [...cartItems, item]);
+    }
+  }
 
   return (
     <CartContext.Provider
       value={{
-        fullName,
+        cartItems,
+        setCartItems,
+        addToCart,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import AddNewProduct from "./AddNewProduct";
 import Spinner from "../UI/Spinner";
 import "./Products.css";
 
-function Products({ setCartItems }) {
+function Products() {
   const [products, setProducts] = useState([]);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [productToUpdate, setProductToUpdate] = useState();
@@ -24,8 +24,6 @@ function Products({ setCartItems }) {
 
     setProducts([newProduct, ...products]);
   }
-
-  console.log("products component re-renderer!");
 
   function fetchProducts() {
     setProducts([]);
@@ -71,7 +69,6 @@ function Products({ setCartItems }) {
             description={product.description}
             setProducts={setProducts}
             onUpdateItem={handleUpdateItem}
-            setCartItems={setCartItems}
           />
         ))}
       </div>
