@@ -1,34 +1,19 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import PropTypes from "prop-types";
 import { CartContext } from "./CartContext";
+import { cartReducer, initialState } from "../reducers/cartReducer";
 
 function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
-  console.log(cartItems);
+  const [state, dispatch] = useReducer(cartReducer, initialState);
 
   function addToCart(item) {
-    const findCartItem = cartItems.find((cItem) => cItem.id === item.id);
-    if (findCartItem) {
-      const newCartItems = cartItems.map((cItem) => {
-        if (cItem.id === findCartItem.id) {
-          return {
-            ...cItem,
-            quantity: cItem.quantity + 1,
-          };
-        }
-        return cItem;
-      });
-      setCartItems(newCartItems);
-    } else {
-      setCartItems((cartItems) => [...cartItems, item]);
-    }
+    dispatch({ type: "ADD_TO_CART", cartItem: item });
   }
 
   return (
     <CartContext.Provider
       value={{
-        cartItems,
-        setCartItems,
+        cartItems: state.cartItems,
         addToCart,
       }}
     >
