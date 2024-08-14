@@ -3,25 +3,34 @@ import PropTypes from "prop-types";
 import Button from "../UI/Button";
 import "./ProductItem.css";
 import { CartContext } from "../../context/cart/CartContext";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 function ProductItem({
-  setProducts,
   id,
   image,
   title,
   price,
   description,
   onUpdateItem,
+  fetchProducts
 }) {
   const { addToCart } = useContext(CartContext);
   const productItem = { id, image, title, price, description };
 
+  async function deleteData(){
+    try {
+      await deleteDoc(doc(db, "products", id));
+      console.log("Product deleted successfully!");
+
+      fetchProducts()
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function handleDeleteItem() {
-    setProducts((products) =>
-      products.filter((product) => {
-        return product.id !== id;
-      })
-    );
+    deleteData()
   }
 
   return (
@@ -62,8 +71,9 @@ ProductItem.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  setProducts: PropTypes.func.isRequired,
   onUpdateItem: PropTypes.func.isRequired,
+  fetchProducts: PropTypes.func.isRequired,
+
 };
 
 export default ProductItem;

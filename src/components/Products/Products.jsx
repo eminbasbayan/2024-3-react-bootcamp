@@ -88,8 +88,8 @@ function Products() {
             title={product.title}
             price={product.price}
             description={product.description}
-            setProducts={setProducts}
             onUpdateItem={handleUpdateItem}
+            fetchProducts={fetchProducts}
           />
         ))}
       </div>
