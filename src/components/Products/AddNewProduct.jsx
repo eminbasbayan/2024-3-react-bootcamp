@@ -5,6 +5,8 @@ import ProductInput from "./ProductInput";
 
 import "./AddNewProduct.css";
 import Modal from "../UI/Modal";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 const productInputs = [
   {
@@ -38,8 +40,8 @@ function AddNewProduct({
   productData,
   setProductData,
   productToUpdate,
-  setProducts,
   setProductToUpdate,
+  fetchProducts
 }) {
   const [isShowModal, setIsShowModal] = useState(false);
 
@@ -56,7 +58,7 @@ function AddNewProduct({
     });
   }
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
 
     const isFormValid = Object.values(productData).every(
@@ -69,13 +71,9 @@ function AddNewProduct({
     }
 
     if (productToUpdate) {
-      setProducts((products) => {
-        return products.map((item) => {
-          return item.id === productToUpdate.id
-            ? { ...productData, id: productToUpdate.id }
-            : item;
-        });
-      });
+      const productRef = doc(db, "products", productToUpdate.id);
+      await updateDoc(productRef, productData);
+      fetchProducts();
       setProductToUpdate();
       clearInputs();
       return;
@@ -122,9 +120,9 @@ AddNewProduct.propTypes = {
   handleSubmit: PropTypes.func,
   productData: PropTypes.object,
   setProductData: PropTypes.func,
-  setProducts: PropTypes.func,
   productToUpdate: PropTypes.object,
   setProductToUpdate: PropTypes.func,
+  fetchProducts: PropTypes.func,
 };
 
 export default AddNewProduct;

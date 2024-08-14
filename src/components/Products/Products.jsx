@@ -76,8 +76,8 @@ function Products() {
         productData={productData}
         setProductData={setProductData}
         productToUpdate={productToUpdate}
-        setProducts={setProducts}
         setProductToUpdate={setProductToUpdate}
+        fetchProducts={fetchProducts}
       />
       <div className="products-wrapper">
         {products.map((product) => (
