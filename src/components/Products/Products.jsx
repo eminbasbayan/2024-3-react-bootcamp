@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import AddNewProduct from "./AddNewProduct";
 import Spinner from "../UI/Spinner";
+import { addDoc, collection } from "firebase/firestore";
 import "./Products.css";
+import { db } from "../../firebaseConfig";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -15,14 +17,27 @@ function Products() {
     description: "",
   });
 
+  async function addData(newProduct){
+    try {
+    const docRef = await addDoc(collection(db, "products"), newProduct);
+    console.log(docRef.id);
+
+    return { id: docRef.id, ...newProduct };
+    
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   function handleSubmit(productData) {
     const newProduct = {
       ...productData,
-      id: Math.random(),
       price: Number(productData.price),
     };
 
-    setProducts([newProduct, ...products]);
+    addData(newProduct).then((savedProduct)=> {
+      setProducts([savedProduct, ...products]);
+    })
   }
 
   function fetchProducts() {
