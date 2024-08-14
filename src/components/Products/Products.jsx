@@ -17,13 +17,12 @@ function Products() {
     description: "",
   });
 
-  async function addData(newProduct){
+  async function addData(newProduct) {
     try {
-    const docRef = await addDoc(collection(db, "products"), newProduct);
-    console.log(docRef.id);
+      const docRef = await addDoc(collection(db, "products"), newProduct);
+      console.log(docRef.id);
 
-    return { id: docRef.id, ...newProduct };
-    
+      return { id: docRef.id, ...newProduct };
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +34,9 @@ function Products() {
       price: Number(productData.price),
     };
 
-    addData(newProduct).then((savedProduct)=> {
+    addData(newProduct).then((savedProduct) => {
       setProducts([savedProduct, ...products]);
-    })
+    });
   }
 
   function fetchProducts() {
@@ -45,7 +44,15 @@ function Products() {
     setIsShowLoading(true);
     fetch("https://fakestoreapi.com/products/")
       .then((res) => res.json())
-      .then((data) => setProducts(data))
+      .then(async (data) => {
+        let productsArray = [];
+        for (const product of data) {
+          const { id, ...newProduct } = product;
+          const savedProduct = await addData(newProduct);
+          productsArray.push(savedProduct);
+        }
+        setProducts(productsArray);
+      })
       .catch((err) => console.log(err))
       .finally(() => setIsShowLoading(false));
   }
@@ -55,9 +62,9 @@ function Products() {
     setProductData(product);
   }
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
 
   return (
     <div className="products">
