@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import AddNewProduct from "./AddNewProduct";
 import Spinner from "../UI/Spinner";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import "./Products.css";
 import { db } from "../../firebaseConfig";
 
@@ -39,22 +39,21 @@ function Products() {
     });
   }
 
-  function fetchProducts() {
+  async function fetchProducts() {
     setProducts([]);
     setIsShowLoading(true);
-    fetch("https://fakestoreapi.com/products/")
-      .then((res) => res.json())
-      .then(async (data) => {
-        let productsArray = [];
-        for (const product of data) {
-          const { id, ...newProduct } = product;
-          const savedProduct = await addData(newProduct);
-          productsArray.push(savedProduct);
-        }
-        setProducts(productsArray);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setIsShowLoading(false));
+    try {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const productsArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(productsArray);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsShowLoading(false);
+    }
   }
 
   function handleUpdateItem(product) {
@@ -62,9 +61,9 @@ function Products() {
     setProductData(product);
   }
 
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="products">
