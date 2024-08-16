@@ -99,7 +99,7 @@ function AddNewProduct({
         <select
           value={productData.categoryId}
           onChange={(e) =>
-            setProductData({ ...productData, categoryId: e.target.value })
+            setProductData({ ...productData, categoryId: e.target.value})
           }
         >
           <option value="" disabled>

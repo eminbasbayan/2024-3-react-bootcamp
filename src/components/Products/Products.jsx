@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import ProductItem from "./ProductItem";
 import AddNewProduct from "./AddNewProduct";
 import Spinner from "../UI/Spinner";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import "./Products.css";
 import { db } from "../../firebaseConfig";
 
@@ -34,6 +41,7 @@ function Products() {
     const newProduct = {
       ...productData,
       price: Number(productData.price),
+      categoryId: doc(db, "categories", productData.categoryId),
     };
 
     addData(newProduct).then((savedProduct) => {
@@ -64,13 +72,43 @@ function Products() {
         id: doc.id,
         ...doc.data(),
       }));
-      console.log(productsArray?.filter((item) => item.categoryId));
-      setProducts(productsArray);
+
+      const newProducts = productsArray.map((item) => {
+        if (item.categoryId) {
+          getCategory(item.categoryId);
+          const findCategory = categories.find(
+            (cItem) => cItem.id === item.categoryId
+          );
+          console.log(findCategory);
+          return {
+            ...item,
+            categoryInfo: findCategory || null, // Return null if the category is not found
+            category: findCategory.name,
+          };
+        } else {
+          return item;
+        }
+      });
+      console.log(newProducts);
+      setProducts(productsArray); // Set the modified products array with categoryInfo
     } catch (error) {
       console.log(error);
     } finally {
       setIsShowLoading(false);
     }
+  }
+
+  async function getCategory(categoryId) {
+    const q = query(
+      collection(db, "products"),
+      where("categoryId", "==", doc(db, "categories", categoryId))
+    );
+    const querySnapshot = await getDocs(q);
+    console.log(
+      querySnapshot.forEach((doc) => {
+        console.log({ ...doc.data() });
+      })
+    );
   }
 
   function handleUpdateItem(product) {
@@ -79,9 +117,14 @@ function Products() {
   }
 
   useEffect(() => {
-    fetchProducts();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      fetchProducts();
+    }
+  }, [categories]);
 
   return (
     <div className="products">
