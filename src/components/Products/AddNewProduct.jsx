@@ -1,11 +1,11 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "../UI/Button";
 import ProductInput from "./ProductInput";
 
 import "./AddNewProduct.css";
 import Modal from "../UI/Modal";
-import { doc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 
 const productInputs = [
@@ -41,9 +41,10 @@ function AddNewProduct({
   setProductData,
   productToUpdate,
   setProductToUpdate,
-  fetchProducts
+  fetchProducts,
 }) {
   const [isShowModal, setIsShowModal] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   function handleChange({ target: { name, value } }) {
     setProductData({ ...productData, [name]: value });
@@ -82,6 +83,25 @@ function AddNewProduct({
     handleSubmit(productData);
     clearInputs();
   }
+  console.log(productData);
+
+  async function fetchCategories() {
+    setCategories([]);
+    try {
+      const querySnapshot = await getDocs(collection(db, "categories"));
+      const categoriesArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCategories(categoriesArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <Fragment>
@@ -94,6 +114,21 @@ function AddNewProduct({
             handleChange={handleChange}
           />
         ))}
+        <select
+          value={productData.categoryId}
+          onChange={(e) =>
+            setProductData({ ...productData, categoryId: e.target.value })
+          }
+        >
+          <option value="" disabled>
+            Select Category
+          </option>
+          {categories?.map((category) => (
+            <option value={category.id} key={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
 
         {productToUpdate ? (
           <Button size="lg" color="primary">

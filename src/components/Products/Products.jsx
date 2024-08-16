@@ -15,6 +15,7 @@ function Products() {
     image: "",
     price: "",
     description: "",
+    categoryId: ""
   });
 
   async function addData(newProduct) {
@@ -87,6 +88,7 @@ function Products() {
             image={product.image}
             title={product.title}
             price={product.price}
+            category={product.category}
             description={product.description}
             onUpdateItem={handleUpdateItem}
             fetchProducts={fetchProducts}

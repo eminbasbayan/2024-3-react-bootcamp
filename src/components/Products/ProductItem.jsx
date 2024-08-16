@@ -11,26 +11,27 @@ function ProductItem({
   image,
   title,
   price,
+  category,
   description,
   onUpdateItem,
-  fetchProducts
+  fetchProducts,
 }) {
   const { addToCart } = useContext(CartContext);
-  const productItem = { id, image, title, price, description };
+  const productItem = { id, image, title, price, category, description };
 
-  async function deleteData(){
+  async function deleteData() {
     try {
       await deleteDoc(doc(db, "products", id));
       console.log("Product deleted successfully!");
 
-      fetchProducts()
+      fetchProducts();
     } catch (error) {
       console.log(error);
     }
   }
 
   function handleDeleteItem() {
-    deleteData()
+    deleteData();
   }
 
   return (
@@ -39,7 +40,13 @@ function ProductItem({
         <img src={image} alt="product image" />
       </div>
       <div className="product-info">
-        <strong className="product-title line-1-clamp">{title}</strong>
+        <div className="flex justify-between">
+          <strong className="product-title line-1-clamp">{title}</strong>
+          <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 ml-4">
+            {category}
+          </span>
+        </div>
+
         <p className="product-description line-2-clamp">
           {description.slice(0, 70)}
         </p>
@@ -73,7 +80,6 @@ ProductItem.propTypes = {
   price: PropTypes.number.isRequired,
   onUpdateItem: PropTypes.func.isRequired,
   fetchProducts: PropTypes.func.isRequired,
-
 };
 
 export default ProductItem;
