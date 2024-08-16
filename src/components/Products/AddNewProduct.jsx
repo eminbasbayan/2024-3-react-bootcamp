@@ -42,9 +42,10 @@ function AddNewProduct({
   productToUpdate,
   setProductToUpdate,
   fetchProducts,
+  categories
 }) {
   const [isShowModal, setIsShowModal] = useState(false);
-  const [categories, setCategories] = useState([]);
+
 
   function handleChange({ target: { name, value } }) {
     setProductData({ ...productData, [name]: value });
@@ -83,25 +84,6 @@ function AddNewProduct({
     handleSubmit(productData);
     clearInputs();
   }
-  console.log(productData);
-
-  async function fetchCategories() {
-    setCategories([]);
-    try {
-      const querySnapshot = await getDocs(collection(db, "categories"));
-      const categoriesArray = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCategories(categoriesArray);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   return (
     <Fragment>

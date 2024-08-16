@@ -10,12 +10,13 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [isShowLoading, setIsShowLoading] = useState(false);
   const [productToUpdate, setProductToUpdate] = useState();
+  const [categories, setCategories] = useState([]);
   const [productData, setProductData] = useState({
     title: "",
     image: "",
     price: "",
     description: "",
-    categoryId: ""
+    categoryId: "",
   });
 
   async function addData(newProduct) {
@@ -40,6 +41,20 @@ function Products() {
     });
   }
 
+  async function fetchCategories() {
+    setCategories([]);
+    try {
+      const querySnapshot = await getDocs(collection(db, "categories"));
+      const categoriesArray = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCategories(categoriesArray);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function fetchProducts() {
     setProducts([]);
     setIsShowLoading(true);
@@ -49,6 +64,7 @@ function Products() {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log(productsArray?.filter((item) => item.categoryId));
       setProducts(productsArray);
     } catch (error) {
       console.log(error);
@@ -64,6 +80,7 @@ function Products() {
 
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   return (
@@ -79,6 +96,7 @@ function Products() {
         productToUpdate={productToUpdate}
         setProductToUpdate={setProductToUpdate}
         fetchProducts={fetchProducts}
+        categories={categories}
       />
       <div className="products-wrapper">
         {products.map((product) => (
