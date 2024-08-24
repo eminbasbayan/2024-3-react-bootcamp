@@ -1,7 +1,12 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { loginUser } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,7 +22,13 @@ const LoginPage = () => {
         .min(6, "Şifre en az 6 karakter olmalı!"),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
+      const user = {
+        ...values,
+        avatarUrl:
+          "https://flowbite.com/docs/images/people/profile-picture-4.jpg",
+      };
+      dispatch(loginUser(user));
+      toast.success("Giriş işlemi başarılı!");
       resetForm();
     },
   });

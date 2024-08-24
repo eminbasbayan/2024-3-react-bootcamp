@@ -1,9 +1,20 @@
 import { BsSearch, BsCart } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { LuLogOut } from "react-icons/lu";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../../redux/slices/authSlice";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  console.log(user);
+
+  function handleLogout() {
+    dispatch(logoutUser());
+  }
+
   return (
     <header className="flex items-center justify-between p-4 bg-slate-300 sticky top-0">
       <div className="text-xl font-bold">Logo</div>
@@ -41,6 +52,24 @@ const Header = () => {
             {cartItems.length}
           </b>
         </a>
+        {user && (
+          <>
+            <a href="#" className="text-gray-400 hover:text-white">
+              <img
+                src={user?.avatarUrl}
+                className="w-10 h-10 rounded-full"
+                alt="avatar"
+              />
+            </a>
+            <a
+              href="#"
+              className="text-gray-400 hover:text-white"
+              onClick={handleLogout}
+            >
+              <LuLogOut size={24} />
+            </a>
+          </>
+        )}
       </div>
     </header>
   );
