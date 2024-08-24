@@ -16,6 +16,7 @@ function ProductItem({
   onUpdateItem,
   fetchProducts,
 }) {
+  return;
   const { addToCart } = useContext(CartContext);
   const productItem = { id, image, title, price, category, description };
 

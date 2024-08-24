@@ -3,6 +3,7 @@ import { BsSearch, BsCart } from "react-icons/bs";
 import { CartContext } from "../../context/cart/CartContext";
 
 const Header = () => {
+  return;
   const { cartItems } = useContext(CartContext);
   return (
     <header className="flex items-center justify-between p-4 bg-slate-300 sticky top-0">
