@@ -1,10 +1,10 @@
-import { useContext } from "react";
 import PropTypes from "prop-types";
 import Button from "../UI/Button";
-import "./ProductItem.css";
-import { CartContext } from "../../context/cart/CartContext";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
+import "./ProductItem.css";
 
 function ProductItem({
   id,
@@ -16,9 +16,8 @@ function ProductItem({
   onUpdateItem,
   fetchProducts,
 }) {
-  return;
-  const { addToCart } = useContext(CartContext);
   const productItem = { id, image, title, price, category, description };
+  const dispatch = useDispatch()
 
   async function deleteData() {
     try {
@@ -54,7 +53,7 @@ function ProductItem({
         <span className="product-price">{price}₺</span>
         <Button
           color="primary"
-          onClick={() => addToCart({ ...productItem, quantity: 1 })}
+          onClick={() => dispatch(addToCart({ ...productItem, quantity: 1 }))}
         >
           Add To Cart
         </Button>

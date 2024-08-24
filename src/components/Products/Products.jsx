@@ -29,7 +29,6 @@ function Products() {
   async function addData(newProduct) {
     try {
       const docRef = await addDoc(collection(db, "products"), newProduct);
-      console.log(docRef.id);
 
       return { id: docRef.id, ...newProduct };
     } catch (error) {
@@ -79,7 +78,6 @@ function Products() {
           const findCategory = categories.find(
             (cItem) => cItem.id === item.categoryId
           );
-          console.log(findCategory);
           return {
             ...item,
             categoryInfo: findCategory || null, // Return null if the category is not found
@@ -89,7 +87,6 @@ function Products() {
           return item;
         }
       });
-      console.log(newProducts);
       setProducts(productsArray); // Set the modified products array with categoryInfo
     } catch (error) {
       console.log(error);
@@ -104,11 +101,6 @@ function Products() {
       where("categoryId", "==", doc(db, "categories", categoryId))
     );
     const querySnapshot = await getDocs(q);
-    console.log(
-      querySnapshot.forEach((doc) => {
-        console.log({ ...doc.data() });
-      })
-    );
   }
 
   function handleUpdateItem(product) {

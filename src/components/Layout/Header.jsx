@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { BsSearch, BsCart } from "react-icons/bs";
-import { CartContext } from "../../context/cart/CartContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
-  return;
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useSelector((state) => state.cart);
+  console.log(cartItems);
   return (
     <header className="flex items-center justify-between p-4 bg-slate-300 sticky top-0">
       <div className="text-xl font-bold">Logo</div>
