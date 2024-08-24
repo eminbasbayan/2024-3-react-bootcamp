@@ -9,8 +9,6 @@ const Header = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  console.log(user);
-
   function handleLogout() {
     dispatch(logoutUser());
   }
