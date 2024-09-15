@@ -5,6 +5,7 @@ import { db } from "../../firebaseConfig";
 import { addToCart } from "../../redux/slices/cartSlice";
 import { useDispatch } from "react-redux";
 import "./ProductItem.css";
+import { Link } from "react-router-dom";
 
 function ProductItem({
   id,
@@ -41,7 +42,9 @@ function ProductItem({
       </div>
       <div className="product-info">
         <div className="flex justify-between">
+          <Link to={`/products/${id}`}>
           <strong className="product-title line-1-clamp">{title}</strong>
+          </Link>
           <span className="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20 ml-4">
             {category}
           </span>
