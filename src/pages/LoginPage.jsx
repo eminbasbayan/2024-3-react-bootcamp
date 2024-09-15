@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import Header from "../components/Layout/Header";
 import { Fragment } from "react";
 
 const LoginPage = () => {
@@ -37,7 +36,6 @@ const LoginPage = () => {
 
   return (
     <Fragment>
-      <Header />
       <div className="bg-gray-100 flex items-center justify-center min-h-screen">
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>

@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Header from "../components/Layout/Header";
 import { Fragment } from "react";
 
 const schema = z.object({
@@ -30,7 +29,6 @@ const RegisterPage = () => {
 
   return (
     <Fragment>
-      <Header />
       <div className="bg-gray-100 flex items-center justify-center min-h-screen">
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
           <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>

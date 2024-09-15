@@ -7,26 +7,32 @@ import { fetchProducts } from "./redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage />
+      element: <MainLayout />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />,
+        },
+      ],
     },
-    {
-      path: "/login",
-      element: <LoginPage />
-    },
-    {
-      path: "/register",
-      element: <RegisterPage />
-    }
-  ])
+  ]);
 
   const dispatch = useDispatch();
-  const {loading, productData} = useSelector((state) => state.product);
+  const { loading, productData } = useSelector((state) => state.product);
 
   console.log(loading);
   console.log(productData);
@@ -40,7 +46,7 @@ function App() {
   return (
     <div className="app container mx-auto">
       <Toaster />
-      
+
       <div className="content mt-5">
         <RouterProvider router={router} />
       </div>
