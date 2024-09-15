@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { fetchProducts } from "./redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
 
@@ -13,6 +14,14 @@ function App() {
     {
       path: "/",
       element: <HomePage />
+    },
+    {
+      path: "/login",
+      element: <LoginPage />
+    },
+    {
+      path: "/register",
+      element: <RegisterPage />
     }
   ])
 
