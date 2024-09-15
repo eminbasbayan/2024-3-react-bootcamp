@@ -31,7 +31,7 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to="/login"
+              to="/auth/login"
               className={({ isActive }) =>
                 `hover:text-blue-400 ${isActive && "text-blue-400"} `
               }
@@ -41,7 +41,7 @@ const Header = () => {
           </li>
           <li>
             <NavLink
-              to="/register"
+              to="/auth/register"
               className={({ isActive }) =>
                 `hover:text-blue-400 ${isActive && "text-blue-400"} `
               }

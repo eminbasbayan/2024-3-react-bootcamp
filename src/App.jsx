@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import MainLayout from "./layouts/MainLayout";
+import AuthLayout from "./layouts/AuthLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,12 +20,18 @@ function App() {
           path: "/",
           element: <HomePage />,
         },
+      ],
+    },
+    {
+      path: "/auth",
+      element: <AuthLayout />,
+      children: [
         {
-          path: "/login",
+          path: "login",
           element: <LoginPage />,
         },
         {
-          path: "/register",
+          path: "register",
           element: <RegisterPage />,
         },
       ],
