@@ -40,10 +40,9 @@ function App() {
   return (
     <div className="app container mx-auto">
       <Toaster />
-      <Header />
+      
       <div className="content mt-5">
         <RouterProvider router={router} />
-        <LoginPage />
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { LuLogOut } from "react-icons/lu";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/slices/authSlice";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -19,24 +20,19 @@ const Header = () => {
       <nav>
         <ul className="flex space-x-4">
           <li>
-            <a href="#" className="hover:text-blue-400">
+            <Link to="/" className="hover:text-blue-400">
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="hover:text-blue-400">
-              About
-            </a>
+            <Link to="/login" className="hover:text-blue-400">
+              Login
+            </Link>
           </li>
           <li>
-            <a href="#" className="hover:text-blue-400">
-              Services
-            </a>
-          </li>
-          <li>
-            <a href="#" className="hover:text-blue-400">
-              Contact
-            </a>
+            <Link to="/register" className="hover:text-blue-400">
+              Register
+            </Link>
           </li>
         </ul>
       </nav>
