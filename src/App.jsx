@@ -24,7 +24,7 @@ function App() {
           element: <HomePage />,
         },
         {
-          path: "/product-details",
+          path: "/products/:productId",
           element: <ProductDetailsPage/>
         }
       ],
