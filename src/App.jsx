@@ -1,13 +1,21 @@
 import { Toaster } from "react-hot-toast";
-import CategoryManagement from "./components/Firebase/CategoryManagement";
 import Header from "./components/Layout/Header";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { useEffect } from "react";
 import { fetchProducts } from "./redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />
+    }
+  ])
+
   const dispatch = useDispatch();
   const {loading, productData} = useSelector((state) => state.product);
 
@@ -25,6 +33,7 @@ function App() {
       <Toaster />
       <Header />
       <div className="content mt-5">
+        <RouterProvider router={router} />
         <LoginPage />
       </div>
     </div>
