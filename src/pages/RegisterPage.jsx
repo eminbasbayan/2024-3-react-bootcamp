@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { auth } from "../firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   email: z.string().min(1, "Zorunlu alan").email("Geçerli bir e-mail giriniz!"),
@@ -12,6 +15,7 @@ const schema = z.object({
 });
 
 const RegisterPage = () => {
+  const [firebaseError, setFirebaseError] = useState(null);
   const {
     register,
     handleSubmit,
@@ -22,8 +26,21 @@ const RegisterPage = () => {
     mode: "onBlur",
   });
 
-  function onSubmit(values) {
-    console.log(values);
+  async function onSubmit(values) {
+    const { email, password } = values;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      toast.success("Kullanıcı başarıyla kaydedildi!");
+      console.log(userCredential.user);
+    } catch (error) {
+      console.log(error.message);
+      setFirebaseError(error.message);
+    }
     reset();
   }
 
@@ -67,6 +84,9 @@ const RegisterPage = () => {
                 <span className="text-red-600">{errors.password.message}</span>
               )}
             </div>
+            {firebaseError && (
+              <div className="text-red-600 text-sm mt-2">{firebaseError}</div>
+            )}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <input
