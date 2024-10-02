@@ -3,9 +3,12 @@ import * as Yup from "yup";
 import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { auth } from "../firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginPage = () => {
+  const [firebaseError, setFirebaseError] = useState(null);
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -22,15 +25,24 @@ const LoginPage = () => {
         .required("Zorunlu alan!")
         .min(6, "Şifre en az 6 karakter olmalı!"),
     }),
-    onSubmit: (values, { resetForm }) => {
-      const user = {
-        ...values,
-        avatarUrl:
-          "https://flowbite.com/docs/images/people/profile-picture-4.jpg",
-      };
-      dispatch(loginUser(user));
-      toast.success("Giriş işlemi başarılı!");
-      resetForm();
+    onSubmit: async (values, { resetForm }) => {
+      const { email, password } = values;
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
+        console.log(user);
+
+        dispatch(loginUser({ ...values, uid: user.uid }));
+        toast.success("Giriş işlemi başarılı!");
+        resetForm();
+      } catch (error) {
+        console.log(error.message);
+        setFirebaseError(error.message);
+      }
     },
   });
 
@@ -106,6 +118,9 @@ const LoginPage = () => {
                 </a>
               </div>
             </div>
+            {firebaseError && (
+              <div className="text-red-600 text-sm mt-2">{firebaseError}</div>
+            )}
             <div>
               <button
                 type="submit"

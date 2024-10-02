@@ -8,6 +8,9 @@ import { router } from "./routes/routes";
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.product);
+  const auth = useSelector((state) => state.auth);
+
+  console.log(auth);
 
   useEffect(() => {
     if (loading === "idle") {
