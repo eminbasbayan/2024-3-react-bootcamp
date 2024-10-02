@@ -1,5 +1,4 @@
 import { Toaster } from "react-hot-toast";
-import Header from "./components/Layout/Header";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import { useEffect } from "react";
@@ -43,6 +42,28 @@ function App() {
         },
       ],
     },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "dashboard",
+          element: <AdminDashboardPage />
+        },
+        {
+          path: "products",
+          element: <ProductsManagementPage />
+        },
+        {
+          path: "orders",
+          element: <OrdersManagementPage />
+        },
+        {
+          path: "users",
+          element: <UsersManagementPage />
+        }
+      ]
+    }
   ]);
 
   const dispatch = useDispatch();
