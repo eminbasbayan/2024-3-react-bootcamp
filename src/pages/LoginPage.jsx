@@ -4,12 +4,15 @@ import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { Fragment, useState } from "react";
-import { auth } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [firebaseError, setFirebaseError] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -34,11 +37,24 @@ const LoginPage = () => {
           password
         );
         const user = userCredential.user;
-        console.log(user);
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
 
-        dispatch(loginUser({ ...values, uid: user.uid }));
-        toast.success("Giriş işlemi başarılı!");
-        resetForm();
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+
+          // Kullanıcının rolünü kontrol et
+          const userRole = userData.role;
+          dispatch(loginUser({ ...values, uid: user.uid, role: userRole }));
+          if (userRole === "admin") {
+            navigate("/admin/dashboard");
+          } else {
+            navigate("/");
+          }
+
+          toast.success("Giriş işlemi başarılı!");
+          resetForm();
+        }
       } catch (error) {
         console.log(error.message);
         setFirebaseError(error.message);

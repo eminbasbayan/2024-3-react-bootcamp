@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Fragment, useState } from "react";
-import { auth } from "../firebaseConfig";
+import { auth, db } from "../firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import toast from "react-hot-toast";
+import { doc, setDoc } from "firebase/firestore";
 
 const schema = z.object({
   email: z.string().min(1, "Zorunlu alan").email("Geçerli bir e-mail giriniz!"),
@@ -34,9 +35,16 @@ const RegisterPage = () => {
         email,
         password
       );
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        role: "user", // varsayılan rol: "user"
+      });
 
       toast.success("Kullanıcı başarıyla kaydedildi!");
       console.log(userCredential.user);
+      setFirebaseError(null);
     } catch (error) {
       console.log(error.message);
       setFirebaseError(error.message);
