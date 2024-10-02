@@ -10,6 +10,11 @@ import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import ErrorPage from "./pages/ErrorPage";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import ProductManagementPage from "./pages/admin/ProductManagementPage";
+import OrderManagementPage from "./pages/admin/OrderManagementPage";
+import UserManagementPage from "./pages/admin/UserManagementPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -52,15 +57,15 @@ function App() {
         },
         {
           path: "products",
-          element: <ProductsManagementPage />
+          element: <ProductManagementPage />
         },
         {
           path: "orders",
-          element: <OrdersManagementPage />
+          element: <OrderManagementPage />
         },
         {
           path: "users",
-          element: <UsersManagementPage />
+          element: <UserManagementPage />
         }
       ]
     }
