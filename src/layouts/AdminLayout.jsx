@@ -1,6 +1,26 @@
-import { Link, Outlet } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { auth } from "../firebaseConfig";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/slices/authSlice";
 
 const AdminLayout = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function handleLogout() {
+    try {
+      await signOut(auth);
+      toast.success("Başarıyla çıkış yaptınız!");
+      dispatch(logoutUser());
+      navigate("/auth/login");
+    } catch (error) {
+      toast.error("Çıkış işlemi sırasında hata oluştu!");
+      console.log("Logout error:", error);
+    }
+  }
+
   return (
     <div className="admin-layout">
       <div className="min-h-screen flex flex-col">
@@ -11,12 +31,12 @@ const AdminLayout = () => {
             <Link to="/" className="text-gray-200 hover:text-white px-4">
               Home
             </Link>
-            <Link
-              to="/auth/logout"
+            <button
+              onClick={handleLogout}
               className="text-gray-200 hover:text-white px-4"
             >
               Logout
-            </Link>
+            </button>
           </nav>
         </header>
         {/* Main Layout: Sidebar + Content */}

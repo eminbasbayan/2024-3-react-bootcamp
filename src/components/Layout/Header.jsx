@@ -3,15 +3,25 @@ import { LuLogOut } from "react-icons/lu";
 
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/slices/authSlice";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import toast from "react-hot-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  function handleLogout() {
-    dispatch(logoutUser());
+  async function handleLogout() {
+    try {
+      await signOut(auth);
+      toast.success("Başarıyla çıkış yaptınız!");
+      dispatch(logoutUser());
+    } catch (error) {
+      toast.error("Çıkış işlemi sırasında hata oluştu!");
+      console.log("Logout error:", error);
+    }
   }
 
   return (
