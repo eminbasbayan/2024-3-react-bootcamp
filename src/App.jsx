@@ -4,13 +4,32 @@ import { fetchProducts } from "./redux/slices/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/routes";
+import { auth } from "./firebaseConfig";
+import { loginUser, logoutUser } from "./redux/slices/authSlice";
 
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.product);
-  const auth = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth);
 
-  console.log(auth);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(
+          loginUser({
+            email: user.email,
+          })
+        );
+      } else {
+        dispatch(logoutUser());
+      }
+    });
+
+    // clean-up function
+    return () => unsubscribe();
+  }, [dispatch]);
+
+  console.log(authState);
 
   useEffect(() => {
     if (loading === "idle") {

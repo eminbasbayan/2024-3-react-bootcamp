@@ -7,7 +7,7 @@ import { Fragment, useState } from "react";
 import { auth, db } from "../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [firebaseError, setFirebaseError] = useState(null);
@@ -47,9 +47,9 @@ const LoginPage = () => {
           const userRole = userData.role;
           dispatch(loginUser({ ...values, uid: user.uid, role: userRole }));
           if (userRole === "admin") {
-            navigate("/admin/dashboard");
+            // navigate("/admin/dashboard");
           } else {
-            navigate("/");
+            // navigate("/");
           }
 
           toast.success("Giriş işlemi başarılı!");
@@ -146,6 +146,7 @@ const LoginPage = () => {
               </button>
             </div>
           </form>
+          <Link to={"/"}>Home Page</Link>
         </div>
       </div>
     </Fragment>
