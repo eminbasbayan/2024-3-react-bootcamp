@@ -1,12 +1,9 @@
-import BackwardCounter from "../components/BackwardCounter";
-import ForwardCounter from "../components/ForwardCounter";
+import OptimisticUpdatesAndRollbacks from "../components/OptimisticUpdatesAndRollbacks";
 
 const HomePage = () => {
   return (
     <div className="home-page">
-      <ForwardCounter />
-      <br />
-      <BackwardCounter />
+      <OptimisticUpdatesAndRollbacks />
     </div>
   );
 };
