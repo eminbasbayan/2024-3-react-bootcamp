@@ -1,9 +1,12 @@
-import Products from "../components/Products/Products";
+import BackwardCounter from "../components/BackwardCounter";
+import ForwardCounter from "../components/ForwardCounter";
 
 const HomePage = () => {
   return (
     <div className="home-page">
-      <Products />
+      <ForwardCounter />
+      <br />
+      <BackwardCounter />
     </div>
   );
 };

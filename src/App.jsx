@@ -10,7 +10,6 @@ import { loginUser, logoutUser } from "./redux/slices/authSlice";
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.product);
-  const authState = useSelector((state) => state.auth);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -28,8 +27,6 @@ function App() {
     // clean-up function
     return () => unsubscribe();
   }, [dispatch]);
-
-  console.log(authState);
 
   useEffect(() => {
     if (loading === "idle") {
