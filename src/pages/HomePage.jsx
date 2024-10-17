@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import MyButton from "../components/PerformanceOptimization/MyButton";
 import MyElement from "../components/PerformanceOptimization/MyElement";
 
@@ -7,9 +7,9 @@ const HomePage = () => {
 
   console.log("home page çalıştı!");
 
-  const toggleParagraphHandler = () => {
+  const toggleParagraphHandler = useCallback(() => {
     setToggleParagraph((prevState) => !prevState);
-  };
+  }, []);
 
   return (
     <div className="home-page">

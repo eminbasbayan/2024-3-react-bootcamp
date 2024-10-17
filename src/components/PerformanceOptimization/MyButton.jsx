@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import React from "react";
 
 const MyButton = (props) => {
   console.log("button çalıştı!");
@@ -18,4 +19,6 @@ MyButton.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default MyButton;
+const Memoized = React.memo(MyButton)
+
+export default Memoized;
