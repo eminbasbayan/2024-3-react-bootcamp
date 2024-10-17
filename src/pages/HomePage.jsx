@@ -1,9 +1,20 @@
-import OptimisticUpdatesAndRollbacks from "../components/OptimisticUpdatesAndRollbacks";
+import { useState } from "react";
+import MyButton from "../components/PerformanceOptimization/MyButton";
+import MyElement from "../components/PerformanceOptimization/MyElement";
 
 const HomePage = () => {
+  const [toggleParagraph, setToggleParagraph] = useState(false);
+
+  console.log("home page çalıştı!");
+
+  const toggleParagraphHandler = () => {
+    setToggleParagraph((prevState) => !prevState);
+  };
+
   return (
     <div className="home-page">
-      <OptimisticUpdatesAndRollbacks />
+      <MyElement show={false} />
+      <MyButton onClick={toggleParagraphHandler}>Toggle Paragraph</MyButton>
     </div>
   );
 };
